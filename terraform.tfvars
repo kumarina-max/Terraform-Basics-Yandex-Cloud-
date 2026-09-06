@@ -1,0 +1,5 @@
+cloud_id         = "b1gd93clge709dai86l9"
+folder_id        = "b1gihc7vpedk3h6akdq1"
+default_zone     = "ru-central1-a"
+vpc_name         = "develop"
+vms_ssh_root_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOUiMjj9rylyKBmj2Acl9uuIH9spaXBjfLNY57fVpAP user@terraform"
