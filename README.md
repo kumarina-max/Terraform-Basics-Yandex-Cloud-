@@ -95,3 +95,11 @@ variable "vm_web_preemptible" {
 ### Задание 8
 
 ![TASK8](screenshots/task8.png)
+
+### Задание 9
+
+####  Внешний IP адрес был убран
+![TASK9](screenshots/task9.1.png)
+
+#### Осуществлена проверка доступа в интернет с ВМ  через serial console. 
+![TASK9.1](screenshots/task9.png)
