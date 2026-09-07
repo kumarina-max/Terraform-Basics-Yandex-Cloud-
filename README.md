@@ -69,5 +69,11 @@ variable "vm_web_preemptible" {
 #### Создана 2 ВМ
 ![VM2](screenshots/task3.png)
 
+### Задание 4
+
+####  Вывод значений ip-адресов команды terraform output
+
+![OUTPUT](screenshots/task4.png)
+
 ### Задание 6
 В рамках задания я создала map-переменную vms_resources для ресурсов ВМ, общую metadata_common, закомментировала старые переменные.
