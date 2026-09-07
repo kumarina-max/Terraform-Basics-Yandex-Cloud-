@@ -64,7 +64,10 @@ variable "vm_web_preemptible" {
   default     = true
 }
 ```
+### Задание 3
 
+#### Создана 2 ВМ
+![VM2](screenshots/task3.png)
 
 ### Задание 6
 В рамках задания я создала map-переменную vms_resources для ресурсов ВМ, общую metadata_common, закомментировала старые переменные.
