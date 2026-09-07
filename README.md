@@ -85,3 +85,13 @@ variable "vm_web_preemptible" {
 В рамках задания я создала map-переменную vms_resources для ресурсов ВМ, общую metadata_common, закомментировала старые переменные.
 
 ![TASK6](screenshots/task6.png)
+
+### Задание 7
+
+#### Команды и их вывод.
+
+![TASK7](screenshots/task7.png)
+
+### Задание 8
+
+![TASK8](screenshots/task8.png)
