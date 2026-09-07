@@ -75,5 +75,13 @@ variable "vm_web_preemptible" {
 
 ![OUTPUT](screenshots/task4.png)
 
+### Задание 5
+
+![LOCAL](screenshots/task5.png)
+
+
 ### Задание 6
+
 В рамках задания я создала map-переменную vms_resources для ресурсов ВМ, общую metadata_common, закомментировала старые переменные.
+
+![TASK6](screenshots/task6.png)
