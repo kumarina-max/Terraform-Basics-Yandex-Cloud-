@@ -57,3 +57,9 @@ variable "role_db" {
   description = "Роль для БД-ВМ"
   default     = "db"
 }
+
+
+variable "test" {
+  type = list(map(list(string)))
+  description = "Список карт с данными для SSH-подключения"
+}

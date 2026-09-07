@@ -1,50 +1,61 @@
+# Источник образа
+data "yandex_compute_image" "ubuntu" {
+  family = var.vm_web_image_family
+}
+
+# VPC сеть
 resource "yandex_vpc_network" "develop" {
   name = var.vpc_name
 }
+
+# Подсеть для веб-ВМ (с привязкой к таблице маршрутизации)
 resource "yandex_vpc_subnet" "develop" {
   name           = var.vpc_name
   zone           = var.default_zone
   network_id     = yandex_vpc_network.develop.id
   v4_cidr_blocks = var.default_cidr
+  route_table_id = yandex_vpc_route_table.nat_route_table.id   # NAT
 }
 
-
-data "yandex_compute_image" "ubuntu" {
-  family = var.vm_web_image_family
-}
-resource "yandex_compute_instance" "platform" {
-  name        = local.vm_web_name
-  platform_id = var.vm_web_platform_id
-  resources {
-    cores         = var.vms_resources["web"].cores
-    memory        = var.vms_resources["web"].memory
-    core_fraction = var.vms_resources["web"].core_fraction
-  }
-  boot_disk {
-    initialize_params {
-      image_id = data.yandex_compute_image.ubuntu.image_id
-    }
-  }
-  scheduling_policy {
-    preemptible = var.vm_web_preemptible
-  }
-  network_interface {
-    subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
-  }
-
-  metadata = merge(var.metadata_common, {
-    "ssh-keys" = "ubuntu:${var.vms_ssh_root_key}"
-  })
-
-}
-
-# Подсеть для БД-ВМ в зоне ru-central1-b
+# Подсеть для БД-ВМ (с привязкой к таблице маршрутизации)
 resource "yandex_vpc_subnet" "develop_db" {
   name           = "develop-db"
   zone           = var.vm_db_zone
   network_id     = yandex_vpc_network.develop.id
   v4_cidr_blocks = ["10.0.2.0/24"]
+  route_table_id = yandex_vpc_route_table.nat_route_table.id   # NAT
+}
+
+# Первая ВМ — веб-сервер
+resource "yandex_compute_instance" "platform" {
+  name        = local.vm_web_name
+  platform_id = var.vm_web_platform_id
+  zone        = var.default_zone
+
+  resources {
+    cores         = var.vms_resources["web"].cores
+    memory        = var.vms_resources["web"].memory
+    core_fraction = var.vms_resources["web"].core_fraction
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu.image_id
+    }
+  }
+
+  scheduling_policy {
+    preemptible = var.vm_web_preemptible
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.develop.id
+    nat       = false   # внешний IP отключён
+  }
+
+  metadata = merge(var.metadata_common, {
+    "ssh-keys" = "ubuntu:${file("~/.ssh/id_ed25519.pub")}"
+  })
 }
 
 # Вторая ВМ — база данных
@@ -71,10 +82,10 @@ resource "yandex_compute_instance" "db" {
 
   network_interface {
     subnet_id = yandex_vpc_subnet.develop_db.id
-    nat       = true
+    nat       = false   # внешний IP отключён
   }
 
   metadata = merge(var.metadata_common, {
-    "ssh-keys" = "ubuntu:${var.vms_ssh_root_key}"
+    "ssh-keys" = "ubuntu:${file("~/.ssh/id_ed25519.pub")}"
   })
 }
