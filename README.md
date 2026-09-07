@@ -11,7 +11,7 @@ core_fraction = 5 позволяет снизить гарантированну
 
 ![ЛК Yandex Cloud](screenshots/task1.png)
 
-!curl](screenshots/task1.1.png)
+![curl](screenshots/task1.1.png)
 ### Задание 2
 
 ```hcl
