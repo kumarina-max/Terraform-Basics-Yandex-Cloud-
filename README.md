@@ -1,5 +1,5 @@
-# Terraform-Basics-Yandex-Cloud-
-Terraform Basics: Yandex Cloud 
+# Terraform-Basics-Yandex-Cloud- Марина Кукушкина
+
 ### Задание 1
 
 #### Ответы на вопросы:
